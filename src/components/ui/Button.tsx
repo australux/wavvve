@@ -14,7 +14,7 @@ export const Button = ({ variant, ...props }: ButtonProps) => {
 };
 
 const buttonVariants = cva(
-    "inline-flex px-4 py-2 text-sm font-medium transition-colors duration-150 rounded-md shadow",
+    "inline-flex px-4 py-2 transition-colors duration-150 rounded-md shadow",
     {
         variants: {
             variant: {

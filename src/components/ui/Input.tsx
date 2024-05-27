@@ -1,31 +1,41 @@
+import { cn } from "@/utils/cn";
 import { cva } from "class-variance-authority";
-import { HTMLAttributes } from "react";
+import * as React from "react";
+// import { cva } from "class-variance-authority";
 
-type InputProps = HTMLAttributes<HTMLInputElement> & {
-    type: "text" | "password" | "checked";
-    variant?: "dark" | "light";
-};
+export interface InputProps
+    extends React.InputHTMLAttributes<HTMLInputElement> {
+    variant: "dark" | "light";
+}
 
-export const Input = ({ type, variant, ...props }: InputProps) => {
-    return (
-        <>
-            <input
-                type={type}
-                {...props}
-                className={inputVariants({ variant })}
-            />
-        </>
-    );
-};
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+    ({ className, variant, type, ...props }, ref) => {
+        return (
+            <>
+                <input
+                    type={type}
+                    className={cn(inputVariants({ variant, className }))}
+                    ref={ref}
+                    {...props}
+                />
+            </>
+        );
+    }
+);
 
-const inputVariants = cva("py-2 px-4", {
-    variants: {
-        variant: {
-            dark: "",
-            light: "",
+export { Input };
+
+const inputVariants = cva(
+    "px-4 py-2 text-sm transition-colors bg-transparent border rounded-lg focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50",
+    {
+        variants: {
+            variant: {
+                dark: "text-white border-zinc-600 focus-visible:ring-zinc-300",
+                light: "text-black border-zinc-400 focus-visible:ring-zinc-700",
+            },
         },
-    },
-    defaultVariants: {
-        variant: "dark",
-    },
-});
+        defaultVariants: {
+            variant: "dark",
+        },
+    }
+);

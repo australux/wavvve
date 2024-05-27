@@ -6,6 +6,9 @@ import { TAlbum } from "@/definitions";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { SearchBar } from "@/components/SearchBar";
 import { Button } from "@/components/ui/Button";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
     const [albumsList, setAlbumsList] = useState<TAlbum[]>([]);
@@ -37,15 +40,17 @@ function App() {
     }
 
     return (
-        <main className="flex flex-col items-center h-screen text-white bg-zinc-800">
-            <header className="flex items-center justify-between w-full h-16 px-8 bg-zinc-200">
-                <Button variant="light" onClick={logout}>
-                    Logout
-                </Button>
-                <SearchBar />
-                <Button onClick={() => handleDelete}>Delete</Button>
-            </header>
-        </main>
+        <QueryClientProvider client={queryClient}>
+            <main className="flex flex-col items-center h-screen text-white bg-zinc-800">
+                <header className="flex items-center justify-between w-full h-16 px-8 bg-zinc-100">
+                    <Button variant="light" onClick={logout}>
+                        Logout
+                    </Button>
+                    <SearchBar sdk={sdk} />
+                    <Button onClick={() => handleDelete}>Delete</Button>
+                </header>
+            </main>
+        </QueryClientProvider>
     );
 }
 
