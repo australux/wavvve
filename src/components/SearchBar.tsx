@@ -4,8 +4,19 @@ import { Input } from "./ui/Input";
 import { X } from "./ui/Svgs";
 import { SpotifyApi } from "@spotify/web-api-ts-sdk";
 import { useState } from "react";
+import { List } from "./ui/List";
+import { ListItem } from "./ui/ListItem";
+import { TAlbum } from "@/definitions";
+import { SuggestionCard } from "./SuggestionCard";
 
-export const SearchBar = ({ sdk }: { sdk: SpotifyApi }) => {
+type SearchBarProps = {
+    sdk: SpotifyApi;
+    albumsList: TAlbum[];
+    setAlbumsList: React.Dispatch<React.SetStateAction<TAlbum[]>>;
+    handleSelection: (data: TAlbum) => void;
+};
+
+export const SearchBar = ({ sdk, handleSelection }: SearchBarProps) => {
     const [q, setQ] = useState<string>("");
     const [inputValue, setInputValue] = useState<string>("");
 
@@ -14,8 +25,7 @@ export const SearchBar = ({ sdk }: { sdk: SpotifyApi }) => {
         const res = await sdk.search(
             q,
             ["album", "artist", "track"],
-            undefined,
-            2
+            undefined
         );
         console.log("fetching...", res);
         return res;
@@ -29,16 +39,20 @@ export const SearchBar = ({ sdk }: { sdk: SpotifyApi }) => {
         }, 200);
     }
 
+    function handleClick(album: TAlbum) {
+        handleSelection(album);
+    }
+
     const { data: results, isLoading } = useQuery({
         queryFn: () => fetchSearch(q),
         queryKey: ["search", q],
     });
 
     return (
-        <div>
-            <form onSubmit={(e) => e.preventDefault()}>
+        <div className="relative">
+            <form onSubmit={(e) => e.preventDefault()} className="">
                 <div className="flex items-center gap-2">
-                    <label htmlFor="searchbar"></label>
+                    <label htmlFor="searchbar" className="hidden"></label>
                     <Input
                         type="text"
                         id="searchbar"
@@ -54,12 +68,21 @@ export const SearchBar = ({ sdk }: { sdk: SpotifyApi }) => {
                     </div>
                 </div>
             </form>
-            {isLoading ? (
-                <div>Loading</div>
-            ) : (
-                results?.albums.items.map((album) => (
-                    <div key={album.id}>{album.name}</div>
-                ))
+            {inputValue && (
+                <List>
+                    {isLoading ? (
+                        <ListItem>Loading</ListItem>
+                    ) : (
+                        results?.albums.items.map((album) => (
+                            <ListItem
+                                key={album.id}
+                                onClick={() => handleClick(album)}
+                            >
+                                <SuggestionCard album={album} />
+                            </ListItem>
+                        ))
+                    )}
+                </List>
             )}
         </div>
     );

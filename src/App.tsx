@@ -7,6 +7,7 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { SearchBar } from "@/components/SearchBar";
 import { Button } from "@/components/ui/Button";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AlbumCard } from "./components/AlbumCard";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,11 @@ function App() {
         navigate(0);
     }
 
+    function handleSelection(data: TAlbum) {
+        setAlbumsList([...albumsList, data]);
+        setItem([...albumsList, data]);
+    }
+
     function handleDelete(album: TAlbum) {
         const ID = album.id;
         const updatedList = albumsList.filter((album) => album.id === ID);
@@ -46,9 +52,19 @@ function App() {
                     <Button variant="light" onClick={logout}>
                         Logout
                     </Button>
-                    <SearchBar sdk={sdk} />
+                    <SearchBar
+                        sdk={sdk}
+                        albumsList={albumsList}
+                        setAlbumsList={setAlbumsList}
+                        handleSelection={handleSelection}
+                    />
                     <Button onClick={() => handleDelete}>Delete</Button>
                 </header>
+                <div className="flex flex-col w-2/3 h-full gap-4 py-8">
+                    {albumsList.map((album) => (
+                        <AlbumCard album={album} />
+                    ))}
+                </div>
             </main>
         </QueryClientProvider>
     );
