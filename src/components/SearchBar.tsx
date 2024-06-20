@@ -2,18 +2,17 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "./ui/Button";
 import { Input } from "./ui/Input";
 import { X } from "./ui/Svgs";
-import { SpotifyApi } from "@spotify/web-api-ts-sdk";
+import { Album, SimplifiedAlbum, SpotifyApi } from "@spotify/web-api-ts-sdk";
 import { useState } from "react";
 import { List } from "./ui/List";
 import { ListItem } from "./ui/ListItem";
-import { TAlbum } from "@/definitions";
 import { SuggestionCard } from "./SuggestionCard";
 
 type SearchBarProps = {
     sdk: SpotifyApi;
-    albumsList: TAlbum[];
-    setAlbumsList: React.Dispatch<React.SetStateAction<TAlbum[]>>;
-    handleSelection: (data: TAlbum) => void;
+    albumsList: Album[];
+    setAlbumsList: React.Dispatch<React.SetStateAction<Album[]>>;
+    handleSelection: (id: string) => void;
 };
 
 export const SearchBar = ({ sdk, handleSelection }: SearchBarProps) => {
@@ -39,8 +38,19 @@ export const SearchBar = ({ sdk, handleSelection }: SearchBarProps) => {
         }, 200);
     }
 
-    function handleClick(album: TAlbum) {
-        handleSelection(album);
+    function handleBlur() {
+        setTimeout(() => {
+            setQ("");
+        }, 200);
+    }
+
+    function handleFocus() {
+        setQ(inputValue);
+    }
+
+    function handleClick(album: SimplifiedAlbum) {
+        handleSelection(album.id);
+        setInputValue("");
     }
 
     const { data: results, isLoading } = useQuery({
@@ -51,7 +61,7 @@ export const SearchBar = ({ sdk, handleSelection }: SearchBarProps) => {
     return (
         <div className="relative">
             <form onSubmit={(e) => e.preventDefault()} className="">
-                <div className="flex items-center gap-2">
+                <div className="relative flex items-center gap-2">
                     <label htmlFor="searchbar" className="hidden"></label>
                     <Input
                         type="text"
@@ -59,19 +69,27 @@ export const SearchBar = ({ sdk, handleSelection }: SearchBarProps) => {
                         variant="light"
                         value={inputValue}
                         onChange={handleInput}
+                        onBlur={handleBlur}
+                        onFocus={handleFocus}
                     />
                     <button type="submit" hidden></button>
-                    <div>
-                        <Button>
-                            <X />
-                        </Button>
-                    </div>
+                    {q && (
+                        <div className="absolute right-1 top-1">
+                            <Button
+                                variant="icon"
+                                className="p-1 shadow-none"
+                                onClick={() => setInputValue("")}
+                            >
+                                <X className="w-6 text-zinc-500" />
+                            </Button>
+                        </div>
+                    )}
                 </div>
             </form>
-            {inputValue && (
+            {q && (
                 <List>
                     {isLoading ? (
-                        <ListItem>Loading</ListItem>
+                        <ListItem>Loading...</ListItem>
                     ) : (
                         results?.albums.items.map((album) => (
                             <ListItem

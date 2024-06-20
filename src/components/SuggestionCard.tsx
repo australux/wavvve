@@ -1,7 +1,7 @@
-import { TAlbum } from "@/definitions";
+import { SimplifiedAlbum } from "@spotify/web-api-ts-sdk";
 
 type SugsestionProps = React.HTMLAttributes<HTMLDivElement> & {
-    album: TAlbum;
+    album: SimplifiedAlbum;
 };
 
 export const SuggestionCard = ({ album, ...props }: SugsestionProps) => {

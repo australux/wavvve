@@ -1,13 +1,15 @@
+import defaultTheme from "tailwindcss/defaultTheme";
 /** @type {import('tailwindcss').Config} */
 export default {
     content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
         extend: {
             fontFamily: {
-                abril: ["Abril Fatface", "serif"],
-                judson: ["Judson", "serif"],
+                abril: ["Abril Fatface", ...defaultTheme.fontFamily.serif],
+                judson: ["Judson", ...defaultTheme.fontFamily.serif],
+                manrope: ["Manrope", ...defaultTheme.fontFamily.sans],
             },
         },
     },
-    plugins: [],
+    plugins: [require("tailwind-scrollbar")],
 };

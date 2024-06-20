@@ -1,6 +1,8 @@
 import { HTMLAttributes } from "react";
 
-type SVGProps = HTMLAttributes<SVGElement>;
+type SVGProps = HTMLAttributes<SVGElement> & {
+    className?: string;
+};
 
 export const X = (props: SVGProps) => {
     return (
@@ -133,6 +135,50 @@ export const No = (props: SVGProps) => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636"
+                />
+            </svg>
+        </>
+    );
+};
+
+export const ChevronDown = (props: SVGProps) => {
+    return (
+        <>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+                {...props}
+            >
+                <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                />
+            </svg>
+        </>
+    );
+};
+
+export const ChevronUp = (props: SVGProps) => {
+    return (
+        <>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+                {...props}
+            >
+                <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m4.5 15.75 7.5-7.5 7.5 7.5"
                 />
             </svg>
         </>
