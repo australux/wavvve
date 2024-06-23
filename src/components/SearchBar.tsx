@@ -59,8 +59,8 @@ export const SearchBar = ({ sdk, handleSelection }: SearchBarProps) => {
     });
 
     return (
-        <div className="relative">
-            <form onSubmit={(e) => e.preventDefault()} className="">
+        <div className="relative w-full lg:w-1/2">
+            <form onSubmit={(e) => e.preventDefault()}>
                 <div className="relative flex items-center gap-2">
                     <label htmlFor="searchbar" className="hidden"></label>
                     <Input
@@ -71,6 +71,7 @@ export const SearchBar = ({ sdk, handleSelection }: SearchBarProps) => {
                         onChange={handleInput}
                         onBlur={handleBlur}
                         onFocus={handleFocus}
+                        className="w-full"
                     />
                     <button type="submit" hidden></button>
                     {q && (

@@ -3,12 +3,10 @@ import { useNavigate } from "react-router-dom";
 import "./App.css";
 import { sdk } from "@/auth/sdk";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { SearchBar } from "@/components/SearchBar";
-import { Button } from "@/components/ui/Button";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AlbumCard } from "./components/AlbumCard";
 import { Album, User } from "@spotify/web-api-ts-sdk";
-import { Profile } from "./components/Profile";
+import { Header } from "./components/Header";
 
 const queryClient = new QueryClient();
 
@@ -22,7 +20,6 @@ function App() {
     useEffect(() => {
         async function getUser() {
             const profile: User = await sdk.makeRequest("GET", "me");
-            console.log(profile);
 
             setUser(profile);
         }
@@ -58,21 +55,17 @@ function App() {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <main className="flex flex-col items-center h-screen overflow-hidden text-white bg-zinc-800 font-manrope scrollbar-none">
-                <header className="flex items-center justify-between w-full h-16 px-8 py-2 bg-zinc-100">
-                    <Button variant="light" onClick={logout}>
-                        Logout
-                    </Button>
-                    <SearchBar
-                        sdk={sdk}
-                        albumsList={albumsList}
-                        setAlbumsList={setAlbumsList}
-                        handleSelection={handleSelection}
-                    />
-                    {user !== null && <Profile user={user} />}
-                </header>
-                <div className="flex flex-col items-center w-full h-full overflow-y-auto scrollbar-none">
-                    <div className="grid w-2/3 grid-cols-2 gap-8 py-8">
+            <div className="flex flex-col items-center h-screen overflow-hidden text-white bg-zinc-900 font-inter scrollbar-none">
+                <Header
+                    sdk={sdk}
+                    albumsList={albumsList}
+                    setAlbumsList={setAlbumsList}
+                    handleSelection={handleSelection}
+                    user={user}
+                    logout={logout}
+                />
+                <main className="flex flex-col items-center w-full h-full overflow-y-auto scrollbar-none">
+                    <div className="flex flex-col w-full gap-4 px-4 py-4 md:gap-8 lg:w-2/3 md:grid md:grid-cols-2">
                         {albumsList.map((album) => (
                             <AlbumCard
                                 album={album}
@@ -81,8 +74,8 @@ function App() {
                             />
                         ))}
                     </div>
-                </div>
-            </main>
+                </main>
+            </div>
         </QueryClientProvider>
     );
 }

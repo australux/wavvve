@@ -8,6 +8,7 @@ export default {
                 abril: ["Abril Fatface", ...defaultTheme.fontFamily.serif],
                 judson: ["Judson", ...defaultTheme.fontFamily.serif],
                 manrope: ["Manrope", ...defaultTheme.fontFamily.sans],
+                inter: ["Inter", ...defaultTheme.fontFamily.sans],
             },
         },
     },

@@ -8,12 +8,12 @@ export const SuggestionCard = ({ album, ...props }: SugsestionProps) => {
     return (
         <div
             {...props}
-            className="grid grid-cols-[1fr_2fr] w-full gap-2 text-sm"
+            className="grid grid-cols-[1fr_3fr] w-full gap-2 text-sm"
         >
-            <div className="w-full h-full overflow-hidden rounded-md aspect-square">
+            <div className="w-[80px] h-[80px] overflow-hidden rounded-md aspect-square">
                 <img src={album.images[1].url} alt={album.id} />
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center w-full overflow-hidden">
                 <p className="line-clamp-2">{album.name}</p>
             </div>
         </div>
