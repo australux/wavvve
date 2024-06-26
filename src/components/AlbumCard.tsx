@@ -103,7 +103,7 @@ export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
                             <Selector
                                 value={manualRating}
                                 handleRating={(e) =>
-                                    setManualRating(e.target.id)
+                                    setManualRating(Number(e.currentTarget.id))
                                 }
                             />
                         )}
