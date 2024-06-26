@@ -26,7 +26,7 @@ export const SearchBar = ({ sdk, handleSelection }: SearchBarProps) => {
             ["album", "artist", "track"],
             undefined
         );
-        console.log("fetching...", res);
+        // console.log("fetching...", res);
         return res;
         // setResults(res);
     }
@@ -59,7 +59,7 @@ export const SearchBar = ({ sdk, handleSelection }: SearchBarProps) => {
     });
 
     return (
-        <div className="relative w-full lg:w-1/2">
+        <div className="w-full md:relative lg:w-1/2">
             <form onSubmit={(e) => e.preventDefault()}>
                 <div className="relative flex items-center gap-2">
                     <label htmlFor="searchbar" className="hidden"></label>
@@ -81,7 +81,7 @@ export const SearchBar = ({ sdk, handleSelection }: SearchBarProps) => {
                                 className="p-1 shadow-none"
                                 onClick={() => setInputValue("")}
                             >
-                                <X className="w-6 text-zinc-500" />
+                                <X className="w-6 text-zinc-500 group-hover:text-zinc-100" />
                             </Button>
                         </div>
                     )}

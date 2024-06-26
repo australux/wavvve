@@ -285,7 +285,7 @@ export const WavvveBW = (props: SVGProps) => {
                         y2="32"
                         gradientUnits="userSpaceOnUse"
                     >
-                        <stop stop-color="#F4F4F5" />
+                        <stop stopColor="#F4F4F5" />
                         <stop offset="1" stopColor="#D1D5DB" />
                     </linearGradient>
                     <linearGradient
@@ -296,7 +296,7 @@ export const WavvveBW = (props: SVGProps) => {
                         y2="32"
                         gradientUnits="userSpaceOnUse"
                     >
-                        <stop stop-color="#F4F4F5" />
+                        <stop stopColor="#F4F4F5" />
                         <stop offset="1" stopColor="#D1D5DB" />
                     </linearGradient>
                     <linearGradient
@@ -307,7 +307,7 @@ export const WavvveBW = (props: SVGProps) => {
                         y2="32"
                         gradientUnits="userSpaceOnUse"
                     >
-                        <stop stop-color="#F4F4F5" />
+                        <stop stopColor="#F4F4F5" />
                         <stop offset="1" stopColor="#D1D5DB" />
                     </linearGradient>
                 </defs>

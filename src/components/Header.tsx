@@ -22,11 +22,11 @@ export const Header = ({
     logout,
 }: HeaderProps) => {
     return (
-        <header className="flex items-center justify-between w-full h-16 gap-4 p-2 lg:py-2 lg:px-8 bg-zinc-100">
+        <header className="relative flex items-center justify-between w-full h-16 gap-4 p-2 lg:py-2 lg:px-8 bg-zinc-100">
             <div className="flex w-14">
                 <WavvveBW />
             </div>
-            <div className="flex justify-center w-full lg:w-1/2">
+            <div className="flex justify-center w-full lg:w-2/3">
                 <SearchBar
                     sdk={sdk}
                     albumsList={albumsList}
@@ -34,7 +34,7 @@ export const Header = ({
                     handleSelection={handleSelection}
                 />
             </div>
-            <div>
+            <div className="w-14 lg:w-36">
                 {user !== null && <Profile user={user} logout={logout} />}
             </div>
         </header>

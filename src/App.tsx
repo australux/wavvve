@@ -27,7 +27,8 @@ function App() {
         const saved_albums = getItem();
 
         if (!saved_albums) {
-            throw new Error("No saved albums");
+            setItem([]);
+            // throw new Error("No saved albums");
         }
 
         getUser();
@@ -65,15 +66,26 @@ function App() {
                     logout={logout}
                 />
                 <main className="flex flex-col items-center w-full h-full overflow-y-auto scrollbar-none">
-                    <div className="flex flex-col w-full gap-4 px-4 py-4 md:gap-8 lg:w-2/3 md:grid md:grid-cols-2">
-                        {albumsList.map((album) => (
-                            <AlbumCard
-                                album={album}
-                                handleDelete={handleDelete}
-                                key={album.id}
-                            />
-                        ))}
-                    </div>
+                    {albumsList.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center w-full h-full gap-4">
+                            <h2 className="text-3xl font-medium">
+                                Start searching music
+                            </h2>
+                            <p className="text-zinc-400">
+                                Add albums and songs to your timeline
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="flex flex-col w-full gap-4 px-4 py-4 md:gap-8 lg:w-2/3 md:grid md:grid-cols-2">
+                            {albumsList.map((album) => (
+                                <AlbumCard
+                                    album={album}
+                                    handleDelete={handleDelete}
+                                    key={album.id}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </main>
             </div>
         </QueryClientProvider>
@@ -81,43 +93,3 @@ function App() {
 }
 
 export default App;
-
-// function SpotifySearch({ sdk }: { sdk: SpotifyApi }) {
-//     const [results, setResults] = useState<SearchResults<["artist"]>>(
-//         {} as SearchResults<["artist"]>
-//     );
-
-//     useEffect(() => {
-//         (async () => {
-//             const results = await sdk.search("The Beatles", ["artist"]);
-//             setResults(() => results);
-//         })();
-//     }, [sdk]);
-
-//     // generate a table for the results
-//     const tableRows = results.artists?.items.map((artist) => {
-//         return (
-//             <tr key={artist.id}>
-//                 <td>{artist.name}</td>
-//                 <td>{artist.popularity}</td>
-//                 <td>{artist.followers.total}</td>
-//             </tr>
-//         );
-//     });
-
-//     return (
-//         <>
-//             <h1>Spotify Search for The Beatles</h1>
-//             <table>
-//                 <thead>
-//                     <tr>
-//                         <th>Name</th>
-//                         <th>Popularity</th>
-//                         <th>Followers</th>
-//                     </tr>
-//                 </thead>
-//                 <tbody>{tableRows}</tbody>
-//             </table>
-//         </>
-//     );
-// }
