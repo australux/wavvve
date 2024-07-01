@@ -10,6 +10,9 @@ export default {
                 manrope: ["Manrope", ...defaultTheme.fontFamily.sans],
                 inter: ["Inter", ...defaultTheme.fontFamily.sans],
             },
+            aspectRatio: {
+                "7/5": "7 / 5",
+            },
         },
     },
     plugins: [require("tailwind-scrollbar")],

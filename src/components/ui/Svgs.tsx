@@ -189,65 +189,63 @@ export const Wavvve = (props: SVGProps) => {
     return (
         <>
             <svg
-                width="104"
-                height="34"
-                viewBox="0 0 104 34"
+                width="72"
+                height="32"
+                viewBox="0 0 72 32"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 {...props}
             >
                 <path
-                    d="M2.32814 6.5553C1.04235 5.51036 0.84709 3.62092 1.89203 2.33513C2.93697 1.04933 4.82581 0.853598 6.1116 1.89854C9.76888 4.87073 16.9734 10.7257 22.1105 14.9005C27.2476 19.0753 34.4521 24.9302 38.1094 27.9024C39.3952 28.9474 39.5899 30.8363 38.5449 32.1221C37.5 33.4079 35.6105 33.6032 34.3247 32.5582L18.3264 19.5568L2.32814 6.5553Z"
-                    fill="#A70D60"
-                    fill-opacity="0.85"
+                    d="M22.7712 32H22.9788C26.9059 32 29.3002 27.6802 27.2188 24.35L13.4688 2.35001C12.5551 0.888098 10.9527 0 9.22876 0H9.02124C5.09406 0 2.69985 4.31975 4.78125 7.64999L18.5312 29.65C19.4449 31.1119 21.0473 32 22.7712 32Z"
+                    fill="url(#paint0_linear_57_19)"
                 />
-                <rect
-                    x="63.9914"
-                    y="4.65628"
-                    width="6"
-                    height="47.2334"
-                    rx="3"
-                    transform="rotate(-50.9 63.9914 4.65628)"
-                    fill="#A70D60"
-                    fill-opacity="0.85"
+                <path
+                    d="M42.7712 32H42.9788C46.9059 32 49.3002 27.6802 47.2188 24.35L33.4688 2.35001C32.5551 0.888098 30.9527 0 29.2288 0H29.0212C25.0941 0 22.6998 4.31975 24.7812 7.64999L38.5312 29.65C39.4449 31.1119 41.0473 32 42.7712 32Z"
+                    fill="url(#paint1_linear_57_19)"
                 />
-                <rect
-                    x="31.9938"
-                    y="4.65828"
-                    width="6"
-                    height="47.231"
-                    rx="3"
-                    transform="rotate(-50.9 31.9938 4.65828)"
-                    fill="#A70D60"
-                    fill-opacity="0.85"
+                <path
+                    d="M62.7712 32H62.9788C66.9059 32 69.3002 27.6802 67.2188 24.35L53.4688 2.35001C52.5551 0.888098 50.9527 0 49.2288 0H49.0212C45.0941 0 42.6998 4.31975 44.7812 7.64999L58.5312 29.65C59.4449 31.1119 61.0473 32 62.7712 32Z"
+                    fill="url(#paint2_linear_57_19)"
                 />
-                <rect
-                    x="65.212"
-                    y="1.22335"
-                    width="6"
-                    height="32"
-                    rx="3"
-                    fill="#FF8717"
-                    fill-opacity="0.85"
-                />
-                <rect
-                    x="33.212"
-                    y="1.22335"
-                    width="6"
-                    height="32"
-                    rx="3"
-                    fill="#FF8717"
-                    fill-opacity="0.85"
-                />
-                <rect
-                    x="97.212"
-                    y="1.22335"
-                    width="6"
-                    height="32"
-                    rx="3"
-                    fill="#FF8717"
-                    fill-opacity="0.85"
-                />
+                <defs>
+                    <linearGradient
+                        id="paint0_linear_57_19"
+                        x1="16"
+                        y1="0"
+                        x2="16"
+                        y2="32"
+                        gradientUnits="userSpaceOnUse"
+                    >
+                        <stop stopColor="#FF8717" />
+                        <stop offset="0.13" stopColor="#FF4117" />
+                        <stop offset="1" stopColor="#A70D60" />
+                    </linearGradient>
+                    <linearGradient
+                        id="paint1_linear_57_19"
+                        x1="36"
+                        y1="0"
+                        x2="36"
+                        y2="32"
+                        gradientUnits="userSpaceOnUse"
+                    >
+                        <stop stopColor="#FF8717" />
+                        <stop offset="0.13" stopColor="#FF4117" />
+                        <stop offset="1" stopColor="#A70D60" />
+                    </linearGradient>
+                    <linearGradient
+                        id="paint2_linear_57_19"
+                        x1="56"
+                        y1="0"
+                        x2="56"
+                        y2="32"
+                        gradientUnits="userSpaceOnUse"
+                    >
+                        <stop stopColor="#FF8717" />
+                        <stop offset="0.13" stopColor="#FF4117" />
+                        <stop offset="1" stopColor="#A70D60" />
+                    </linearGradient>
+                </defs>
             </svg>
         </>
     );
@@ -311,6 +309,34 @@ export const WavvveBW = (props: SVGProps) => {
                         <stop offset="1" stopColor="#D1D5DB" />
                     </linearGradient>
                 </defs>
+            </svg>
+        </>
+    );
+};
+
+export const Spinner = (props: SVGProps) => {
+    return (
+        <>
+            <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                {...props}
+            >
+                <circle className="spinner_S1WN" cx="4" cy="12" r="3" />
+                <circle
+                    className="spinner_S1WN spinner_Km9P"
+                    cx="12"
+                    cy="12"
+                    r="3"
+                />
+                <circle
+                    className="spinner_S1WN spinner_JApP"
+                    cx="20"
+                    cy="12"
+                    r="3"
+                />
             </svg>
         </>
     );

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "./ui/Button";
 import { Input } from "./ui/Input";
-import { X } from "./ui/Svgs";
+import { Spinner, X } from "./ui/Svgs";
 import { Album, SimplifiedAlbum, SpotifyApi } from "@spotify/web-api-ts-sdk";
 import { useState } from "react";
 import { List } from "./ui/List";
@@ -20,7 +20,7 @@ export const SearchBar = ({ sdk, handleSelection }: SearchBarProps) => {
     const [inputValue, setInputValue] = useState<string>("");
 
     async function fetchSearch(q: string) {
-        if (!q) return;
+        if (!q) throw new Error("no search querry");
         const res = await sdk.search(
             q,
             ["album", "artist", "track"],
@@ -28,7 +28,6 @@ export const SearchBar = ({ sdk, handleSelection }: SearchBarProps) => {
         );
         // console.log("fetching...", res);
         return res;
-        // setResults(res);
     }
 
     function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
@@ -59,7 +58,7 @@ export const SearchBar = ({ sdk, handleSelection }: SearchBarProps) => {
     });
 
     return (
-        <div className="w-full md:relative lg:w-1/2">
+        <div className="w-full max-w-[500px] sm:relative">
             <form onSubmit={(e) => e.preventDefault()}>
                 <div className="relative flex items-center gap-2">
                     <label htmlFor="searchbar" className="hidden"></label>
@@ -72,6 +71,7 @@ export const SearchBar = ({ sdk, handleSelection }: SearchBarProps) => {
                         onBlur={handleBlur}
                         onFocus={handleFocus}
                         className="w-full"
+                        placeholder="Search"
                     />
                     <button type="submit" hidden></button>
                     {q && (
@@ -90,7 +90,9 @@ export const SearchBar = ({ sdk, handleSelection }: SearchBarProps) => {
             {q && (
                 <List>
                     {isLoading ? (
-                        <ListItem>Loading...</ListItem>
+                        <ListItem>
+                            <Spinner />
+                        </ListItem>
                     ) : (
                         results?.albums.items.map((album) => (
                             <ListItem

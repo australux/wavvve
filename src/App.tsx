@@ -56,7 +56,7 @@ function App() {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <div className="flex flex-col items-center h-screen overflow-hidden text-white bg-zinc-900 font-inter scrollbar-none">
+            <div className="flex flex-col items-center h-screen overflow-hidden antialiased text-black bg-zinc-50 font-inter scrollbar-none">
                 <Header
                     sdk={sdk}
                     albumsList={albumsList}
@@ -76,14 +76,19 @@ function App() {
                             </p>
                         </div>
                     ) : (
-                        <div className="flex flex-col w-full gap-4 px-4 py-4 md:gap-8 lg:w-2/3 md:grid md:grid-cols-2">
-                            {albumsList.map((album) => (
-                                <AlbumCard
-                                    album={album}
-                                    handleDelete={handleDelete}
-                                    key={album.id}
-                                />
-                            ))}
+                        <div className="flex flex-col mt-4">
+                            <h2 className="text-[32px] font-bold pl-4">
+                                Your Albums
+                            </h2>
+                            <div className="flex flex-col w-full max-w-screen-xl gap-4 px-4 py-4 sm:grid sm:grid-cols-2 lg:grid-cols-3">
+                                {albumsList.map((album) => (
+                                    <AlbumCard
+                                        album={album}
+                                        handleDelete={handleDelete}
+                                        key={album.id}
+                                    />
+                                ))}
+                            </div>
                         </div>
                     )}
                 </main>

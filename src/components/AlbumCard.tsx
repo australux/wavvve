@@ -19,15 +19,14 @@ export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
 
     const [open, setOpen] = useState(false);
     const [toggle, setToggle] = useState<"manual" | "auto">("manual");
-    const [manualRating, setManualRating] = useState(0);
-    const [autoRating, setAutoRating] = useState(0);
+    const [rating, setRating] = useState(0);
     const [trackRatings, setRated] = useState(tracks);
 
     useEffect(() => {
         const total = trackRatings.reduce((acc, curr) => acc + curr.value, 0);
         const rated = trackRatings.filter((track) => track.value !== 0);
         const avg = rated.length ? total / rated.length : 0;
-        setAutoRating(avg);
+        setRating(avg);
     }, [trackRatings]);
 
     function calculateRating(rating: number, id: string) {
@@ -40,22 +39,18 @@ export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
 
     function handleToggle(e: React.MouseEvent) {
         setToggle(e.currentTarget.id as "manual" | "auto");
+        setRating(0);
     }
 
     return (
         <>
-            <div className="relative flex flex-col gap-4 p-2 bg-black hover:shadow-md rounded-xl">
-                <div className="relative flex items-center justify-center w-full rounded-lg overflow-clip aspect-[7/5]">
-                    <img
-                        src={album.images[0].url}
-                        alt={album.id}
-                        className="object-cover w-full h-full"
-                    />
-                    <div className="absolute bottom-0 flex flex-col w-[calc(100%_-_1rem)] mb-2 rounded-lg gap-1 p-2 bg-[#111827BF]">
-                        <p className="text-sm font-medium lg:font-semibold md:text-lg text-zinc-100 line-clamp-3">
+            <div className="relative flex flex-col gap-2 p-2 bg-white hover:shadow-md">
+                <div className="flex items-start justify-between w-full">
+                    <div className="flex flex-col">
+                        <p className="text-sm font-bold text-black line-clamp-1">
                             {album.name}
                         </p>
-                        <p className="text-xs md:text-sm text-zinc-400">
+                        <p className="text-xs font-medium text-black line-clamp-1">
                             {album.artists.length > 1 ? (
                                 album.artists.map((artist, i) =>
                                     i == album.artists.length - 1 ? (
@@ -69,64 +64,100 @@ export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
                             )}
                         </p>
                     </div>
+                    <div className="flex gap-2">
+                        {rating != 0 && !open && (
+                            <p className="flex text-sm w-max">
+                                <span className="text-orange-400">
+                                    {rating}
+                                </span>
+                                <span
+                                    className={
+                                        rating == 5
+                                            ? "text-orange-400"
+                                            : "text-zinc-400"
+                                    }
+                                >
+                                    /5
+                                </span>
+                            </p>
+                        )}
+                        <Button
+                            onClick={() => handleDelete(album)}
+                            variant="icon"
+                        >
+                            <X className="w-4 h-4 text-black stroke-2" />
+                        </Button>
+                    </div>
                 </div>
-                <Button
-                    onClick={() => handleDelete(album)}
-                    variant="icon"
-                    className="absolute top-2 right-2"
+                <div className="flex items-center justify-center w-full rounded overflow-clip aspect-7/5">
+                    <img
+                        src={album.images[0].url}
+                        alt={album.id}
+                        className="object-cover w-full h-full"
+                    />
+                </div>
+
+                <div
+                    className={
+                        open
+                            ? "flex flex-col gap-2 px-2 py-1 rounded bg-zinc-50 w-full max-h-full opacity-100 transition-all duration-300"
+                            : "opacity-0 max-h-0"
+                    }
                 >
-                    <X />
-                </Button>
-                <Button
-                    onClick={() => setOpen(!open)}
-                    variant="icon"
-                    className="absolute bottom-2 right-2"
-                >
-                    {open ? <ChevronUp /> : <ChevronDown />}
-                </Button>
-                {open && (
-                    <>
-                        <p>Rating</p>
-                        <div className="flex gap-2">
-                            <Pill
-                                text="manual"
-                                toggle={toggle}
-                                handleToggle={(e) => handleToggle(e)}
-                            />
-                            <Pill
-                                text="auto"
-                                toggle={toggle}
-                                handleToggle={(e) => handleToggle(e)}
-                            />
+                    <p className="text-sm text-zinc-600">Rating</p>
+                    <div className="flex gap-2">
+                        <Pill
+                            text="manual"
+                            toggle={toggle}
+                            handleToggle={(e) => handleToggle(e)}
+                        />
+                        <Pill
+                            text="auto"
+                            toggle={toggle}
+                            handleToggle={(e) => handleToggle(e)}
+                        />
+                    </div>
+
+                    <div
+                        className={
+                            toggle === "manual"
+                                ? "h-full opacity-100 transition-all duration-300"
+                                : "max-h-0 opacity-0"
+                        }
+                    >
+                        <Selector
+                            value={rating}
+                            handleRating={(e) =>
+                                setRating(Number(e.currentTarget.id))
+                            }
+                        />
+                    </div>
+
+                    <div
+                        className={
+                            toggle === "auto"
+                                ? "h-full opacity-100 transition-all duration-300"
+                                : "max-h-0 opacity-0"
+                        }
+                    >
+                        <div className="h-6">
+                            {rating === 0 ? (
+                                <p className="pl-2 text-xs text-zinc-400">
+                                    Rate the tracks to set the album's average
+                                    rating
+                                </p>
+                            ) : (
+                                <p className="pl-2 font-medium text-zinc-400">
+                                    <span className="text-orange-400">
+                                        {rating % 1 === 0
+                                            ? rating
+                                            : rating.toFixed(1)}{" "}
+                                    </span>
+                                    / 5
+                                </p>
+                            )}
                         </div>
-                        {toggle == "manual" && (
-                            <Selector
-                                value={manualRating}
-                                handleRating={(e) =>
-                                    setManualRating(Number(e.currentTarget.id))
-                                }
-                            />
-                        )}
-                        {toggle == "auto" && (
-                            <>
-                                {autoRating === 0 ? (
-                                    <p className="pl-2 text-xs">
-                                        Rate all the tracks to set the album's
-                                        average rating
-                                    </p>
-                                ) : (
-                                    <p className="pl-2 font-medium">
-                                        <span className="text-orange-400">
-                                            {autoRating % 1 === 0
-                                                ? autoRating
-                                                : autoRating.toFixed(1)}{" "}
-                                        </span>
-                                        / 5
-                                    </p>
-                                )}
-                            </>
-                        )}
-                        <div className="flex flex-col w-full gap-2 pb-10 text-xs bg-black rounded-xl top-full md:text-sm">
+                        <div className="flex flex-col w-full gap-2 text-xs md:text-sm">
                             <div className="flex justify-between w-full px-2 pb-2 border-b text-zinc-400 border-zinc-400">
                                 <p>Title</p>
                                 <p>Rating</p>
@@ -139,8 +170,31 @@ export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
                                 />
                             ))}
                         </div>
-                    </>
-                )}
+                    </div>
+                </div>
+
+                <div
+                    className="z-10 flex justify-end w-full h-full bg-lime-100 md:hidden"
+                    onClick={() => setOpen(!open)}
+                >
+                    <Button variant="icon">
+                        {open ? (
+                            <ChevronUp className="w-4 h-4 text-black stroke-2" />
+                        ) : (
+                            <ChevronDown className="w-4 h-4 text-black stroke-2" />
+                        )}
+                    </Button>
+                </div>
+                <div className="justify-end hidden w-full md:flex">
+                    <Button
+                        variant="icon"
+                        onClick={() =>
+                            console.log(`opening modal or sum ${album.name}`)
+                        }
+                    >
+                        <ChevronDown className="w-4 h-4 text-black stroke-2" />
+                    </Button>
+                </div>
             </div>
         </>
     );

@@ -23,11 +23,11 @@ export const Profile = ({ user, logout }: ProfileProps) => {
                 <img src={user.images[0].url} alt={user.id} loading="lazy" />
             </div>
             {open && (
-                <div className="absolute right-0 z-30 flex flex-col items-end min-w-full gap-4 p-2 mt-2 border rounded-lg top-full bg-zinc-950 border-zinc-500">
-                    <p className="text-sm font-semibold text-zinc-500 line-clamp-1">
+                <div className="absolute right-0 z-30 flex flex-col gap-2 p-2 mt-2 bg-white border rounded w-max top-full border-zinc-600">
+                    <p className="text-sm font-semibold text-zinc-600">
                         {user.display_name}
                     </p>
-                    <Button variant="light" onClick={logout}>
+                    <Button variant="dark" onClick={logout}>
                         Logout
                     </Button>
                 </div>
