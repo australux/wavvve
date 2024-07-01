@@ -89,7 +89,7 @@ export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
                         </Button>
                     </div>
                 </div>
-                <div className="flex items-center justify-center w-full h-full rounded overflow-clip aspect-custom">
+                <div className="flex items-center justify-center w-full h-full overflow-hidden rounded aspect-custom">
                     <img
                         src={album.images[0].url}
                         alt={album.id}
