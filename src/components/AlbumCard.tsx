@@ -43,7 +43,7 @@ export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
     }
 
     return (
-        <>
+        <div>
             <div className="relative flex flex-col gap-2 p-2 bg-white hover:shadow-md">
                 <div className="flex items-start justify-between w-full">
                     <div className="flex flex-col">
@@ -173,7 +173,7 @@ export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
                         )}
                     </Button>
                 </div>
-                <div className="justify-end hidden w-full h-max md:flex">
+                <div className="justify-end hidden w-full md:flex">
                     <Button
                         variant="icon"
                         onClick={() =>
@@ -184,6 +184,6 @@ export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
                     </Button>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
