@@ -89,7 +89,7 @@ export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
                         </Button>
                     </div>
                 </div>
-                <div className="flex items-center justify-center w-full overflow-hidden rounded aspect-3/2">
+                <div className="flex items-center justify-center w-full h-full overflow-hidden rounded aspect-3/2">
                     <img
                         src={album.images[0].url}
                         alt={album.id}
@@ -118,61 +118,49 @@ export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
                         />
                     </div>
 
-                    <div
-                        className={
-                            toggle === "manual"
-                                ? "h-full opacity-100 transition-all duration-300"
-                                : "max-h-0 opacity-0"
-                        }
-                    >
+                    {toggle === "manual" && (
                         <Selector
                             value={rating}
                             handleRating={(e) =>
                                 setRating(Number(e.currentTarget.id))
                             }
                         />
-                    </div>
-
-                    <div
-                        className={
-                            toggle === "auto"
-                                ? "h-full opacity-100 transition-all duration-300"
-                                : "max-h-0 opacity-0"
-                        }
-                    >
-                        <div className="h-6">
-                            {rating === 0 ? (
-                                <p className="pl-2 text-xs text-zinc-400">
-                                    Rate the tracks to set the album's average
-                                    rating
-                                </p>
-                            ) : (
-                                <p className="pl-2 font-medium text-zinc-400">
-                                    <span className="text-orange-400">
-                                        {rating % 1 === 0
-                                            ? rating
-                                            : rating.toFixed(1)}{" "}
-                                    </span>
-                                    / 5
-                                </p>
-                            )}
-                        </div>
-                        <div className="flex flex-col w-full gap-2 text-xs md:text-sm">
-                            <div className="flex justify-between w-full px-2 pb-2 border-b text-zinc-400 border-zinc-400">
-                                <p>Title</p>
-                                <p>Rating</p>
+                    )}
+                    {toggle === "auto" && (
+                        <>
+                            <div className="h-6">
+                                {rating === 0 ? (
+                                    <p className="pl-2 text-xs text-zinc-400">
+                                        Rate the tracks to set the album's
+                                        average rating
+                                    </p>
+                                ) : (
+                                    <p className="pl-2 font-medium text-zinc-400">
+                                        <span className="text-orange-400">
+                                            {rating % 1 === 0
+                                                ? rating
+                                                : rating.toFixed(1)}{" "}
+                                        </span>
+                                        / 5
+                                    </p>
+                                )}
                             </div>
-                            {album.tracks.items.map((track) => (
-                                <Track
-                                    track={track}
-                                    key={track.id}
-                                    calculate={calculateRating}
-                                />
-                            ))}
-                        </div>
-                    </div>
+                            <div className="flex flex-col w-full gap-2 text-xs md:text-sm">
+                                <div className="flex justify-between w-full px-2 pb-2 border-b text-zinc-400 border-zinc-400">
+                                    <p>Title</p>
+                                    <p>Rating</p>
+                                </div>
+                                {album.tracks.items.map((track) => (
+                                    <Track
+                                        track={track}
+                                        key={track.id}
+                                        calculate={calculateRating}
+                                    />
+                                ))}
+                            </div>
+                        </>
+                    )}
                 </div>
-
                 <div
                     className="z-10 flex justify-end w-full h-full md:hidden"
                     onClick={() => setOpen(!open)}
