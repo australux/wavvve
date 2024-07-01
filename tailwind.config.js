@@ -12,6 +12,7 @@ export default {
             },
             aspectRatio: {
                 "7/5": "7 / 5",
+                "2/3": "2 / 3",
             },
         },
     },

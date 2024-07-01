@@ -47,7 +47,7 @@ export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
             <div className="relative flex flex-col gap-2 p-2 bg-white hover:shadow-md">
                 <div className="flex items-start justify-between w-full">
                     <div className="flex flex-col">
-                        <p className="text-sm font-bold text-black line-clamp-1">
+                        <p className="font-bold text-black line-clamp-1">
                             {album.name}
                         </p>
                         <p className="text-xs font-medium text-black line-clamp-1">
@@ -89,7 +89,7 @@ export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
                         </Button>
                     </div>
                 </div>
-                <div className="flex items-center justify-center w-full rounded overflow-clip aspect-7/5">
+                <div className="flex items-center justify-center w-full overflow-hidden rounded aspect-7/5">
                     <img
                         src={album.images[0].url}
                         alt={album.id}
@@ -174,7 +174,7 @@ export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
                 </div>
 
                 <div
-                    className="z-10 flex justify-end w-full h-full bg-lime-100 md:hidden"
+                    className="z-10 flex justify-end w-full h-full md:hidden"
                     onClick={() => setOpen(!open)}
                 >
                     <Button variant="icon">
