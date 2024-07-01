@@ -93,10 +93,11 @@ export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
                     <img
                         src={album.images[0].url}
                         alt={album.id}
+                        height={600}
+                        width={600}
                         className="object-cover w-full h-full"
                     />
                 </div>
-
                 <div
                     className={
                         open
@@ -117,7 +118,6 @@ export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
                             handleToggle={(e) => handleToggle(e)}
                         />
                     </div>
-
                     {toggle === "manual" && (
                         <Selector
                             value={rating}
@@ -173,7 +173,7 @@ export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
                         )}
                     </Button>
                 </div>
-                <div className="justify-end hidden w-full md:flex">
+                <div className="justify-end hidden w-full h-max md:flex">
                     <Button
                         variant="icon"
                         onClick={() =>

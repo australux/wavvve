@@ -65,7 +65,7 @@ function App() {
                     user={user}
                     logout={logout}
                 />
-                <main className="flex flex-col items-center w-full h-full overflow-y-auto scrollbar-none bg-lime-200">
+                <main className="flex flex-col items-center w-full h-full overflow-y-auto scrollbar-none">
                     {albumsList.length === 0 ? (
                         <div className="flex flex-col items-center justify-center w-full h-full gap-4">
                             <h2 className="text-3xl font-medium">
