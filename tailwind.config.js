@@ -11,8 +11,7 @@ export default {
                 inter: ["Inter", ...defaultTheme.fontFamily.sans],
             },
             aspectRatio: {
-                "7/5": "7 / 5",
-                "3/2": "3 / 2",
+                custom: "3 / 2",
             },
         },
     },
