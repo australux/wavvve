@@ -17,14 +17,14 @@ export const Track = ({ track }: TrackProps) => {
 
     return (
         <div
-            className={`flex justify-between gap-2 p-2 rounded hover:bg-zinc-100 text-black ${
+            className={`flex flex-col justify-between gap-2 p-2 rounded hover:bg-zinc-100 text-black ${
                 open && "bg-white"
             }`}
             key={track.id}
             onClick={() => setOpen(!open)}
         >
-            <p className="line-clamp-2">{track.name}</p>
-            <div className="flex flex-col gap-1">
+            <div className="flex justify-between w-full">
+                <p className="line-clamp-2">{track.name}</p>
                 <div className="flex items-center justify-end gap-2">
                     {open ? (
                         <ChevronUp
@@ -40,88 +40,88 @@ export const Track = ({ track }: TrackProps) => {
                         />
                     )}
                 </div>
-                {open && (
-                    <div className="flex gap-1">
-                        <div
-                            className={`font-black text-lg px-1 hover:cursor-pointer ${
-                                rating === "F"
-                                    ? "text-orange-400"
-                                    : "text-zinc-400 hover:text-zinc-500"
-                            }`}
-                            id="F"
-                            onClick={handleRating}
-                        >
-                            F
-                        </div>
-                        <div
-                            className={`font-black text-lg px-1 hover:cursor-pointer ${
-                                rating === "E"
-                                    ? "text-orange-400"
-                                    : "text-zinc-400 hover:text-zinc-500"
-                            }`}
-                            id="E"
-                            onClick={handleRating}
-                        >
-                            E
-                        </div>
-                        <div
-                            className={`font-black text-lg px-1 hover:cursor-pointer ${
-                                rating === "D"
-                                    ? "text-orange-400"
-                                    : "text-zinc-400 hover:text-zinc-500"
-                            }`}
-                            id="D"
-                            onClick={handleRating}
-                        >
-                            D
-                        </div>
-                        <div
-                            className={`font-black text-lg px-1 hover:cursor-pointer ${
-                                rating === "C"
-                                    ? "text-orange-400"
-                                    : "text-zinc-400 hover:text-zinc-500"
-                            }`}
-                            id="C"
-                            onClick={handleRating}
-                        >
-                            C
-                        </div>
-                        <div
-                            className={`font-black text-lg px-1 hover:cursor-pointer ${
-                                rating === "B"
-                                    ? "text-orange-400"
-                                    : "text-zinc-400 hover:text-zinc-500"
-                            }`}
-                            id="B"
-                            onClick={handleRating}
-                        >
-                            B
-                        </div>
-                        <div
-                            className={`font-black text-lg px-1 hover:cursor-pointer ${
-                                rating === "A"
-                                    ? "text-orange-400"
-                                    : "text-zinc-400 hover:text-zinc-500"
-                            }`}
-                            id="A"
-                            onClick={handleRating}
-                        >
-                            A
-                        </div>
-                        <div
-                            className={`font-black text-lg px-1 hover:cursor-pointer ${
-                                rating === "S"
-                                    ? "text-orange-400"
-                                    : "text-zinc-400 hover:text-zinc-500"
-                            }`}
-                            id="S"
-                            onClick={handleRating}
-                        >
-                            S
-                        </div>
-                    </div>
-                )}
             </div>
+            {open && (
+                <div className="flex justify-end w-full gap-1">
+                    <div
+                        className={`font-black text-lg px-1 hover:cursor-pointer ${
+                            rating === "F"
+                                ? "text-orange-400"
+                                : "text-zinc-400 hover:text-zinc-500"
+                        }`}
+                        id="F"
+                        onClick={handleRating}
+                    >
+                        F
+                    </div>
+                    <div
+                        className={`font-black text-lg px-1 hover:cursor-pointer ${
+                            rating === "E"
+                                ? "text-orange-400"
+                                : "text-zinc-400 hover:text-zinc-500"
+                        }`}
+                        id="E"
+                        onClick={handleRating}
+                    >
+                        E
+                    </div>
+                    <div
+                        className={`font-black text-lg px-1 hover:cursor-pointer ${
+                            rating === "D"
+                                ? "text-orange-400"
+                                : "text-zinc-400 hover:text-zinc-500"
+                        }`}
+                        id="D"
+                        onClick={handleRating}
+                    >
+                        D
+                    </div>
+                    <div
+                        className={`font-black text-lg px-1 hover:cursor-pointer ${
+                            rating === "C"
+                                ? "text-orange-400"
+                                : "text-zinc-400 hover:text-zinc-500"
+                        }`}
+                        id="C"
+                        onClick={handleRating}
+                    >
+                        C
+                    </div>
+                    <div
+                        className={`font-black text-lg px-1 hover:cursor-pointer ${
+                            rating === "B"
+                                ? "text-orange-400"
+                                : "text-zinc-400 hover:text-zinc-500"
+                        }`}
+                        id="B"
+                        onClick={handleRating}
+                    >
+                        B
+                    </div>
+                    <div
+                        className={`font-black text-lg px-1 hover:cursor-pointer ${
+                            rating === "A"
+                                ? "text-orange-400"
+                                : "text-zinc-400 hover:text-zinc-500"
+                        }`}
+                        id="A"
+                        onClick={handleRating}
+                    >
+                        A
+                    </div>
+                    <div
+                        className={`font-black text-lg px-1 hover:cursor-pointer ${
+                            rating === "S"
+                                ? "text-orange-400"
+                                : "text-zinc-400 hover:text-zinc-500"
+                        }`}
+                        id="S"
+                        onClick={handleRating}
+                    >
+                        S
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
