@@ -5,35 +5,27 @@ import { sdk } from "@/auth/sdk";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AlbumCard } from "./components/AlbumCard";
-import { Album, User } from "@spotify/web-api-ts-sdk";
+import { Album } from "@spotify/web-api-ts-sdk";
 import { Header } from "./components/Header";
+import { TAlbum, TTrack } from "./types";
+import { AlbumModal } from "./components/AlbumModal";
 
 const queryClient = new QueryClient();
 
 function App() {
-    const [albumsList, setAlbumsList] = useState<Album[]>([]);
-    const [user, setUser] = useState<User | null>(null);
-
-    const navigate = useNavigate();
     const { setItem, getItem } = useLocalStorage("saved_albums");
+    const [albumsList, setAlbumsList] = useState<TAlbum[]>([]);
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [selectedAlbum, setSelectedAlbum] = useState<TAlbum>({} as TAlbum);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        async function getUser() {
-            const profile: User = await sdk.makeRequest("GET", "me");
-
-            setUser(profile);
-        }
-
         const saved_albums = getItem();
-
         if (!saved_albums) {
             setItem([]);
-            // throw new Error("No saved albums");
         }
-
-        getUser();
         setAlbumsList(saved_albums);
-    }, []);
+    }, [showModal]);
 
     function logout() {
         sdk.logOut();
@@ -42,11 +34,23 @@ function App() {
 
     async function handleSelection(id: string) {
         const album: Album = await sdk.makeRequest("GET", `albums/${id}`);
-        setAlbumsList([...albumsList, album]);
-        setItem([...albumsList, album]);
+        const formatedTracks: TTrack[] = album.tracks.items.map((track) => ({
+            id: track.id,
+            name: track.name,
+        }));
+        const formatedAlbum: TAlbum = {
+            id: album.id,
+            artists: album.artists,
+            images: album.images,
+            name: album.name,
+            tracks: formatedTracks,
+        };
+
+        setAlbumsList([...albumsList, formatedAlbum]);
+        setItem([...albumsList, formatedAlbum]);
     }
 
-    function handleDelete(album: Album) {
+    function handleDelete(album: TAlbum) {
         const ID = album.id;
         const updatedList = albumsList.filter((album) => album.id !== ID);
 
@@ -62,17 +66,17 @@ function App() {
                     albumsList={albumsList}
                     setAlbumsList={setAlbumsList}
                     handleSelection={handleSelection}
-                    user={user}
                     logout={logout}
                 />
                 <main className="flex flex-col items-center w-full h-full overflow-y-auto scrollbar-none">
                     {albumsList.length === 0 ? (
-                        <div className="flex flex-col items-center justify-center w-full h-full gap-4">
+                        <div className="flex flex-col items-center justify-center w-full h-full gap-4 antialiased font-josefin">
                             <h2 className="text-3xl font-bold">
                                 Search some music
                             </h2>
                             <p className="text-zinc-400">
-                                Add albums and songs to your timeline
+                                All your progress is saved locally in your
+                                browser
                             </p>
                         </div>
                     ) : (
@@ -86,6 +90,9 @@ function App() {
                                         album={album}
                                         handleDelete={handleDelete}
                                         key={album.id}
+                                        showModal={showModal}
+                                        setShowModal={setShowModal}
+                                        setSelectedAlbum={setSelectedAlbum}
                                     />
                                 ))}
                             </div>
@@ -93,6 +100,14 @@ function App() {
                     )}
                 </main>
             </div>
+            {showModal && (
+                <div className="absolute top-0 left-0 z-50 hidden md:flex items-center justify-center w-screen h-screen bg-[#000000a6]">
+                    <AlbumModal
+                        album={selectedAlbum}
+                        setShowModal={setShowModal}
+                    />
+                </div>
+            )}
         </QueryClientProvider>
     );
 }

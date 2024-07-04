@@ -1,17 +1,20 @@
-import { SimplifiedTrack } from "@spotify/web-api-ts-sdk";
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "./ui/Svgs";
+import { TTrack } from "@/types";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 type TrackProps = {
-    track: SimplifiedTrack;
+    track: TTrack;
 };
 
 export const Track = ({ track }: TrackProps) => {
-    const [rating, setRating] = useState("");
+    const [rating, setRating] = useState(track.rating);
     const [open, setOpen] = useState(false);
+    const { updateItem } = useLocalStorage("saved_albums");
 
     function handleRating(e: React.MouseEvent) {
         const newRating = e.currentTarget.id;
+        updateItem(track.id, newRating);
         setRating(newRating);
     }
 

@@ -2,16 +2,17 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "./ui/Button";
 import { Input } from "./ui/Input";
 import { Spinner, X } from "./ui/Svgs";
-import { Album, SimplifiedAlbum, SpotifyApi } from "@spotify/web-api-ts-sdk";
+import { SimplifiedAlbum, SpotifyApi } from "@spotify/web-api-ts-sdk";
 import { useState } from "react";
 import { List } from "./ui/List";
 import { ListItem } from "./ui/ListItem";
 import { SuggestionCard } from "./SuggestionCard";
+import { TAlbum } from "@/types";
 
 type SearchBarProps = {
     sdk: SpotifyApi;
-    albumsList: Album[];
-    setAlbumsList: React.Dispatch<React.SetStateAction<Album[]>>;
+    albumsList: TAlbum[];
+    setAlbumsList: React.Dispatch<React.SetStateAction<TAlbum[]>>;
     handleSelection: (id: string) => void;
 };
 
@@ -81,7 +82,7 @@ export const SearchBar = ({ sdk, handleSelection }: SearchBarProps) => {
                                 className="p-1 shadow-none"
                                 onClick={() => setInputValue("")}
                             >
-                                <X className="w-6 text-zinc-500 group-hover:text-zinc-100" />
+                                <X className="w-6 text-zinc-600" />
                             </Button>
                         </div>
                     )}

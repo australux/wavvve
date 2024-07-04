@@ -1,20 +1,42 @@
-import { Album } from "@spotify/web-api-ts-sdk";
 import { Button } from "./ui/Button";
 import { ChevronDown, ChevronUp, X } from "./ui/Svgs";
 import { useState } from "react";
 import { Track } from "./Track";
 import { Pill } from "./ui/Pill";
 import { Selector } from "./ui/Selector";
+import { TAlbum } from "@/types";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 type AlbumCardProps = {
-    album: Album;
-    handleDelete: (album: Album) => void;
+    album: TAlbum;
+    handleDelete: (album: TAlbum) => void;
+    showModal: boolean;
+    setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+    setSelectedAlbum: React.Dispatch<React.SetStateAction<TAlbum>>;
 };
 
-export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
+export const AlbumCard = ({
+    album,
+    handleDelete,
+    showModal,
+    setShowModal,
+    setSelectedAlbum,
+}: AlbumCardProps) => {
     const [open, setOpen] = useState(false);
     const [toggle, setToggle] = useState(false);
-    const [rating, setRating] = useState("");
+    const [rating, setRating] = useState(album.rating);
+    const { updateItem } = useLocalStorage("saved_albums");
+
+    function handleRating(e: React.MouseEvent) {
+        const newRating = e.currentTarget.id;
+        updateItem(album.id, newRating);
+        setRating(newRating);
+    }
+
+    function handleShowModal() {
+        setSelectedAlbum(album);
+        setShowModal(true);
+    }
 
     return (
         <div>
@@ -41,12 +63,15 @@ export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
                     <div className="flex items-center gap-2">
                         <p
                             className={
-                                rating && !open
+                                (rating && !open) || (rating && !showModal)
                                     ? "text-lg font-black text-orange-400 opacity-100 transition-opacity duration-300"
                                     : "opacity-0"
                             }
                         >
-                            {rating}
+                            <span className="md:hidden">{rating}</span>
+                            <span className="hidden md:inline">
+                                {album.rating}
+                            </span>
                         </p>
                         <Button
                             onClick={() => handleDelete(album)}
@@ -73,10 +98,7 @@ export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
                     }
                 >
                     <p className="text-sm text-zinc-600">Rating</p>
-                    <Selector
-                        value={rating}
-                        handleRating={(e) => setRating(e.currentTarget.id)}
-                    />
+                    <Selector value={rating} handleRating={handleRating} />
                     <div className="flex gap-2">
                         <Pill
                             toggle={toggle}
@@ -97,34 +119,28 @@ export const AlbumCard = ({ album, handleDelete }: AlbumCardProps) => {
                                     <p>Title</p>
                                     <p>Rating</p>
                                 </div>
-                                {album.tracks.items.map((track) => (
+                                {album.tracks.map((track) => (
                                     <Track track={track} key={track.id} />
                                 ))}
                             </div>
                         </>
                     )}
                 </div>
-                <div
-                    className="z-10 flex justify-end w-full h-full md:hidden"
-                    onClick={() => setOpen(!open)}
-                >
-                    <Button variant="icon">
-                        {open ? (
-                            <ChevronUp className="w-4 h-4 text-black stroke-2" />
-                        ) : (
+                <div className="z-10 flex justify-end w-full h-full">
+                    <div className="md:hidden" onClick={() => setOpen(!open)}>
+                        <Button variant="icon">
+                            {open ? (
+                                <ChevronUp className="w-4 h-4 text-black stroke-2" />
+                            ) : (
+                                <ChevronDown className="w-4 h-4 text-black stroke-2" />
+                            )}
+                        </Button>
+                    </div>
+                    <div className="hidden md:flex">
+                        <Button variant="icon" onClick={handleShowModal}>
                             <ChevronDown className="w-4 h-4 text-black stroke-2" />
-                        )}
-                    </Button>
-                </div>
-                <div className="justify-end hidden w-full md:flex">
-                    <Button
-                        variant="icon"
-                        onClick={() =>
-                            console.log(`opening modal or sum ${album.name}`)
-                        }
-                    >
-                        <ChevronDown className="w-4 h-4 text-black stroke-2" />
-                    </Button>
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>

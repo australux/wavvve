@@ -1,5 +1,5 @@
 type SelectorProps = {
-    value: string;
+    value: string | undefined;
     handleRating?: (e: React.MouseEvent) => void;
 };
 

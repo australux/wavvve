@@ -3,9 +3,8 @@ export type TAlbum = {
     name: string;
     artists: TArtist[];
     images: TImage[];
-    img_s?: TImage;
     rating?: string;
-    date?: string;
+    tracks: TTrack[];
 };
 
 export type TArtist = {
@@ -17,4 +16,10 @@ export type TImage = {
     height: number;
     url: string;
     width: number;
+};
+
+export type TTrack = {
+    id: string;
+    name: string;
+    rating?: string;
 };

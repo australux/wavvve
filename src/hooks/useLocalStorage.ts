@@ -1,3 +1,5 @@
+import { TAlbum, TTrack } from "@/types";
+
 export function useLocalStorage(key: string) {
     function setItem(value: unknown) {
         try {
@@ -24,5 +26,29 @@ export function useLocalStorage(key: string) {
         }
     }
 
-    return { setItem, getItem, removeItem };
+    function updateItem(id: string, rating: string) {
+        try {
+            const allItems = getItem();
+            const rated = allItems.map((item: TAlbum) => {
+                if (item.id === id) {
+                    return { ...item, rating };
+                }
+
+                return {
+                    ...item,
+                    tracks: item.tracks.map((item: TTrack) => {
+                        if (item.id === id) {
+                            return { ...item, rating };
+                        }
+                        return item;
+                    }),
+                };
+            });
+            setItem(rated);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    return { setItem, getItem, removeItem, updateItem };
 }
