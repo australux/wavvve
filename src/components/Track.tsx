@@ -4,37 +4,28 @@ import { ChevronDown, ChevronUp } from "./ui/Svgs";
 
 type TrackProps = {
     track: SimplifiedTrack;
-    calculate: (rating: number, id: string) => void;
 };
 
-export const Track = ({ track, calculate }: TrackProps) => {
-    const [rating, setRating] = useState(0);
+export const Track = ({ track }: TrackProps) => {
+    const [rating, setRating] = useState("");
     const [open, setOpen] = useState(false);
 
     function handleRating(e: React.MouseEvent) {
-        const newRating = Number(e.currentTarget.id);
+        const newRating = e.currentTarget.id;
         setRating(newRating);
-        calculate(newRating, track.id);
     }
 
     return (
         <div
-            className={`grid grid-cols-[4fr_1fr] p-2 rounded hover:bg-zinc-100 text-black ${
+            className={`flex justify-between gap-2 p-2 rounded hover:bg-zinc-100 text-black ${
                 open && "bg-white"
             }`}
             key={track.id}
             onClick={() => setOpen(!open)}
         >
-            <p>{track.name}</p>
-            <div className="flex flex-col gap-2">
+            <p className="line-clamp-2">{track.name}</p>
+            <div className="flex flex-col gap-1">
                 <div className="flex items-center justify-end gap-2">
-                    {/* {rating ? (
-                        <span className="flex text-xs text-orange-400 w-max">
-                            {rating}/5
-                        </span>
-                    ) : (
-                        ""
-                    )} */}
                     {open ? (
                         <ChevronUp
                             className={`w-4 h-4 stroke-2 ${
@@ -52,40 +43,82 @@ export const Track = ({ track, calculate }: TrackProps) => {
                 {open && (
                     <div className="flex gap-1">
                         <div
-                            className={`w-5 h-5 rounded-full ${
-                                rating >= 1 ? "bg-orange-400" : "bg-zinc-400"
+                            className={`font-black text-lg px-1 hover:cursor-pointer ${
+                                rating === "F"
+                                    ? "text-orange-400"
+                                    : "text-zinc-400 hover:text-zinc-500"
                             }`}
-                            id="1"
-                            onClick={(e) => handleRating(e)}
-                        ></div>
+                            id="F"
+                            onClick={handleRating}
+                        >
+                            F
+                        </div>
                         <div
-                            className={`w-5 h-5 rounded-full ${
-                                rating >= 2 ? "bg-orange-400" : "bg-zinc-400"
+                            className={`font-black text-lg px-1 hover:cursor-pointer ${
+                                rating === "E"
+                                    ? "text-orange-400"
+                                    : "text-zinc-400 hover:text-zinc-500"
                             }`}
-                            id="2"
-                            onClick={(e) => handleRating(e)}
-                        ></div>
+                            id="E"
+                            onClick={handleRating}
+                        >
+                            E
+                        </div>
                         <div
-                            className={`w-5 h-5 rounded-full ${
-                                rating >= 3 ? "bg-orange-400" : "bg-zinc-400"
+                            className={`font-black text-lg px-1 hover:cursor-pointer ${
+                                rating === "D"
+                                    ? "text-orange-400"
+                                    : "text-zinc-400 hover:text-zinc-500"
                             }`}
-                            id="3"
-                            onClick={(e) => handleRating(e)}
-                        ></div>
+                            id="D"
+                            onClick={handleRating}
+                        >
+                            D
+                        </div>
                         <div
-                            className={`w-5 h-5 rounded-full ${
-                                rating >= 4 ? "bg-orange-400" : "bg-zinc-400"
+                            className={`font-black text-lg px-1 hover:cursor-pointer ${
+                                rating === "C"
+                                    ? "text-orange-400"
+                                    : "text-zinc-400 hover:text-zinc-500"
                             }`}
-                            id="4"
-                            onClick={(e) => handleRating(e)}
-                        ></div>
+                            id="C"
+                            onClick={handleRating}
+                        >
+                            C
+                        </div>
                         <div
-                            className={`w-5 h-5 rounded-full ${
-                                rating >= 5 ? "bg-orange-400" : "bg-zinc-400"
+                            className={`font-black text-lg px-1 hover:cursor-pointer ${
+                                rating === "B"
+                                    ? "text-orange-400"
+                                    : "text-zinc-400 hover:text-zinc-500"
                             }`}
-                            id="5"
-                            onClick={(e) => handleRating(e)}
-                        ></div>
+                            id="B"
+                            onClick={handleRating}
+                        >
+                            B
+                        </div>
+                        <div
+                            className={`font-black text-lg px-1 hover:cursor-pointer ${
+                                rating === "A"
+                                    ? "text-orange-400"
+                                    : "text-zinc-400 hover:text-zinc-500"
+                            }`}
+                            id="A"
+                            onClick={handleRating}
+                        >
+                            A
+                        </div>
+                        <div
+                            className={`font-black text-lg px-1 hover:cursor-pointer ${
+                                rating === "S"
+                                    ? "text-orange-400"
+                                    : "text-zinc-400 hover:text-zinc-500"
+                            }`}
+                            id="S"
+                            onClick={handleRating}
+                        >
+                            S
+                        </div>
                     </div>
                 )}
             </div>

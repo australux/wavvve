@@ -9,18 +9,20 @@ import { Home } from "@/routes/Home.tsx";
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App />,
+        element: <Home />,
     },
     {
-        path: "/home",
-        element: <Home />,
+        path: "/app",
+        element: (
+            <AuthProvider>
+                <App />
+            </AuthProvider>
+        ),
     },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
-        <AuthProvider>
-            <RouterProvider router={router} />
-        </AuthProvider>
+        <RouterProvider router={router} />
     </React.StrictMode>
 );

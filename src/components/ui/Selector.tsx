@@ -1,46 +1,88 @@
 type SelectorProps = {
-    value: number;
+    value: string;
     handleRating?: (e: React.MouseEvent) => void;
 };
 
 export const Selector = ({ value, handleRating }: SelectorProps) => {
     return (
-        <div className="flex gap-1">
+        <div className="flex gap-2">
             <div
-                className={`w-5 h-5 rounded-full ${
-                    value >= 1 ? "bg-orange-400" : "bg-zinc-400"
+                className={`font-black text-2xl px-1 hover:cursor-pointer ${
+                    value === "F"
+                        ? "text-orange-400"
+                        : "text-zinc-400 hover:text-zinc-500"
                 }`}
-                id="1"
+                id="F"
                 onClick={handleRating}
-            ></div>
+            >
+                F
+            </div>
             <div
-                className={`w-5 h-5 rounded-full ${
-                    value >= 2 ? "bg-orange-400" : "bg-zinc-400"
+                className={`font-black text-2xl px-1 hover:cursor-pointer ${
+                    value === "E"
+                        ? "text-orange-400"
+                        : "text-zinc-400 hover:text-zinc-500"
                 }`}
-                id="2"
+                id="E"
                 onClick={handleRating}
-            ></div>
+            >
+                E
+            </div>
             <div
-                className={`w-5 h-5 rounded-full ${
-                    value >= 3 ? "bg-orange-400" : "bg-zinc-400"
+                className={`font-black text-2xl px-1 hover:cursor-pointer ${
+                    value === "D"
+                        ? "text-orange-400"
+                        : "text-zinc-400 hover:text-zinc-500"
                 }`}
-                id="3"
+                id="D"
                 onClick={handleRating}
-            ></div>
+            >
+                D
+            </div>
             <div
-                className={`w-5 h-5 rounded-full ${
-                    value >= 4 ? "bg-orange-400" : "bg-zinc-400"
+                className={`font-black text-2xl px-1 hover:cursor-pointer ${
+                    value === "C"
+                        ? "text-orange-400"
+                        : "text-zinc-400 hover:text-zinc-500"
                 }`}
-                id="4"
+                id="C"
                 onClick={handleRating}
-            ></div>
+            >
+                C
+            </div>
             <div
-                className={`w-5 h-5 rounded-full ${
-                    value >= 5 ? "bg-orange-400" : "bg-zinc-400"
+                className={`font-black text-2xl px-1 hover:cursor-pointer ${
+                    value === "B"
+                        ? "text-orange-400"
+                        : "text-zinc-400 hover:text-zinc-500"
                 }`}
-                id="5"
+                id="B"
                 onClick={handleRating}
-            ></div>
+            >
+                B
+            </div>
+            <div
+                className={`font-black text-2xl px-1 hover:cursor-pointer ${
+                    value === "A"
+                        ? "text-orange-400"
+                        : "text-zinc-400 hover:text-zinc-500"
+                }`}
+                id="A"
+                onClick={handleRating}
+            >
+                A
+            </div>
+            <div
+                className={`font-black text-2xl px-1 hover:cursor-pointer ${
+                    value === "S"
+                        ? "text-orange-400"
+                        : "text-zinc-400 hover:text-zinc-500"
+                }`}
+                id="S"
+                onClick={handleRating}
+            >
+                S
+            </div>
         </div>
     );
 };

@@ -9,6 +9,7 @@ export default {
                 judson: ["Judson", ...defaultTheme.fontFamily.serif],
                 manrope: ["Manrope", ...defaultTheme.fontFamily.sans],
                 inter: ["Inter", ...defaultTheme.fontFamily.sans],
+                josefin: ["Josefin Sans", ...defaultTheme.fontFamily.sans],
             },
             aspectRatio: {
                 custom: "3 / 2",

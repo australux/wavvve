@@ -68,8 +68,8 @@ function App() {
                 <main className="flex flex-col items-center w-full h-full overflow-y-auto scrollbar-none">
                     {albumsList.length === 0 ? (
                         <div className="flex flex-col items-center justify-center w-full h-full gap-4">
-                            <h2 className="text-3xl font-medium">
-                                Start searching music
+                            <h2 className="text-3xl font-bold">
+                                Search some music
                             </h2>
                             <p className="text-zinc-400">
                                 Add albums and songs to your timeline
@@ -77,7 +77,7 @@ function App() {
                         </div>
                     ) : (
                         <div className="flex flex-col mt-4">
-                            <h2 className="text-[32px] font-bold pl-4">
+                            <h2 className="pl-4 text-2xl antialiased font-bold font-josefin">
                                 Your Albums
                             </h2>
                             <div className="flex flex-col w-full max-w-screen-xl gap-4 px-4 py-4 sm:grid sm:grid-cols-2 lg:grid-cols-3">

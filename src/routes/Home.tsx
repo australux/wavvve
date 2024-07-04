@@ -11,7 +11,9 @@ export const Home = () => {
             <h2 className="text-3xl antialiased text-yellow-50 font-abril">
                 Track & Rate your music
             </h2>
-            <Button>Get started</Button>
+            <a href="/app">
+                <Button>Get started</Button>
+            </a>
         </div>
     );
 };
