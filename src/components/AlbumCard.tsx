@@ -5,37 +5,28 @@ import { Track } from "./Track";
 import { Pill } from "./ui/Pill";
 import { Selector } from "./ui/Selector";
 import { TAlbum } from "@/types";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useAlbumContext } from "@/utils/context";
 
 type AlbumCardProps = {
-    album: TAlbum;
     handleDelete: (album: TAlbum) => void;
-    showModal: boolean;
-    setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-    setSelectedAlbum: React.Dispatch<React.SetStateAction<TAlbum>>;
+    handleShowModal: (album: TAlbum) => void;
+    handleRating: (id: string, rating: string) => void;
 };
 
 export const AlbumCard = ({
-    album,
     handleDelete,
-    showModal,
-    setShowModal,
-    setSelectedAlbum,
+    handleShowModal,
+    handleRating,
 }: AlbumCardProps) => {
+    const album = useAlbumContext();
     const [open, setOpen] = useState(false);
     const [toggle, setToggle] = useState(false);
     const [rating, setRating] = useState(album.rating);
-    const { updateItem } = useLocalStorage("saved_albums");
 
-    function handleRating(e: React.MouseEvent) {
+    function updateRating(e: React.MouseEvent) {
         const newRating = e.currentTarget.id;
-        updateItem(album.id, newRating);
+        handleRating(album.id, newRating);
         setRating(newRating);
-    }
-
-    function handleShowModal() {
-        setSelectedAlbum(album);
-        setShowModal(true);
     }
 
     return (
@@ -61,18 +52,18 @@ export const AlbumCard = ({
                         </p>
                     </div>
                     <div className="flex items-center gap-2">
-                        <p
-                            className={
-                                (rating && !open) || (rating && !showModal)
-                                    ? "text-lg font-black text-orange-400 opacity-100 transition-opacity duration-300"
-                                    : "opacity-0"
-                            }
-                        >
-                            <span className="md:hidden">{rating}</span>
-                            <span className="hidden md:inline">
-                                {album.rating}
-                            </span>
-                        </p>
+                        {rating && (
+                            <p
+                                className={
+                                    !open
+                                        ? "text-lg font-black text-orange-400 opacity-100 transition-opacity duration-300"
+                                        : "opacity-0"
+                                }
+                            >
+                                {album.rating !== "G" ? album.rating : ""}
+                            </p>
+                        )}
+
                         <Button
                             onClick={() => handleDelete(album)}
                             variant="icon"
@@ -98,7 +89,7 @@ export const AlbumCard = ({
                     }
                 >
                     <p className="text-sm text-zinc-600">Rating</p>
-                    <Selector value={rating} handleRating={handleRating} />
+                    <Selector value={rating} handleRating={updateRating} />
                     <div className="flex gap-2">
                         <Pill
                             toggle={toggle}
@@ -137,7 +128,10 @@ export const AlbumCard = ({
                         </Button>
                     </div>
                     <div className="hidden md:flex">
-                        <Button variant="icon" onClick={handleShowModal}>
+                        <Button
+                            variant="icon"
+                            onClick={() => handleShowModal(album)}
+                        >
                             <ChevronDown className="w-4 h-4 text-black stroke-2" />
                         </Button>
                     </div>

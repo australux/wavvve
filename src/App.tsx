@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./App.css";
 import { sdk } from "@/auth/sdk";
@@ -9,11 +9,12 @@ import { Album } from "@spotify/web-api-ts-sdk";
 import { Header } from "./components/Header";
 import { TAlbum, TTrack } from "./types";
 import { AlbumModal } from "./components/AlbumModal";
+import { AlbumCardContext } from "./utils/context";
 
 const queryClient = new QueryClient();
 
 function App() {
-    const { setItem, getItem } = useLocalStorage("saved_albums");
+    const { setItem, getItem, updateItem } = useLocalStorage("saved_albums");
     const [albumsList, setAlbumsList] = useState<TAlbum[]>([]);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [selectedAlbum, setSelectedAlbum] = useState<TAlbum>({} as TAlbum);
@@ -25,7 +26,7 @@ function App() {
             setItem([]);
         }
         setAlbumsList(saved_albums);
-    }, [showModal]);
+    }, []);
 
     function logout() {
         sdk.logOut();
@@ -44,6 +45,7 @@ function App() {
             images: album.images,
             name: album.name,
             tracks: formatedTracks,
+            rating: "G",
         };
 
         setAlbumsList([...albumsList, formatedAlbum]);
@@ -57,6 +59,21 @@ function App() {
         setAlbumsList(updatedList);
         setItem(updatedList);
     }
+
+    function handleRating(id: string, rating: string) {
+        updateItem(id, rating);
+        const updatedList = albumsList.map((album) =>
+            album.id === id ? { ...album, rating } : album
+        );
+        setAlbumsList(updatedList);
+    }
+
+    function handleShowModal(album: TAlbum) {
+        setSelectedAlbum(album);
+        setShowModal(true);
+    }
+
+    const albumContext = useMemo(() => selectedAlbum, [selectedAlbum]);
 
     return (
         <QueryClientProvider client={queryClient}>
@@ -86,26 +103,30 @@ function App() {
                             </h2>
                             <div className="flex flex-col w-full max-w-screen-xl gap-4 px-4 py-4 sm:grid sm:grid-cols-2 lg:grid-cols-3">
                                 {albumsList.map((album) => (
-                                    <AlbumCard
-                                        album={album}
-                                        handleDelete={handleDelete}
+                                    <AlbumCardContext.Provider
+                                        value={album}
                                         key={album.id}
-                                        showModal={showModal}
-                                        setShowModal={setShowModal}
-                                        setSelectedAlbum={setSelectedAlbum}
-                                    />
+                                    >
+                                        <AlbumCard
+                                            handleDelete={handleDelete}
+                                            handleShowModal={handleShowModal}
+                                            handleRating={handleRating}
+                                        />
+                                    </AlbumCardContext.Provider>
                                 ))}
                             </div>
                         </div>
                     )}
                 </main>
             </div>
-            {showModal && (
+            {showModal && selectedAlbum && (
                 <div className="absolute top-0 left-0 z-50 hidden md:flex items-center justify-center w-screen h-screen bg-[#000000a6]">
-                    <AlbumModal
-                        album={selectedAlbum}
-                        setShowModal={setShowModal}
-                    />
+                    <AlbumCardContext.Provider value={albumContext}>
+                        <AlbumModal
+                            setShowModal={setShowModal}
+                            handleRating={handleRating}
+                        />
+                    </AlbumCardContext.Provider>
                 </div>
             )}
         </QueryClientProvider>
